@@ -189,7 +189,7 @@ process = (selector, callback) ->
     for element in document.querySelectorAll selector
       callback element
 
-document.addEventListener "DOMContentLoaded", ->
+init = ->
   domLoaded = true
   textProperty = if "textContent" of document.body then "textContent" else "innerText"
 
@@ -221,6 +221,9 @@ document.addEventListener "DOMContentLoaded", ->
         when "weekday-or-date"
           relativeWeekday(time) ? relativeDate(time)
 
+document.addEventListener "DOMContentLoaded", ->
+  init()
+
 run = ->
   event = document.createEvent "Events"
   event.initEvent "time:elapse", true, true
@@ -229,4 +232,4 @@ run = ->
 setInterval run, 60 * 1000
 
 # Public API
-@LocalTime = {relativeDate, relativeTimeAgo, relativeTimeOrDate, relativeWeekday, run, strftime}
+@LocalTime = {init, relativeDate, relativeTimeAgo, relativeTimeOrDate, relativeWeekday, run, strftime}
